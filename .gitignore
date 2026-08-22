@@ -1,0 +1,19 @@
+# environment
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# data and models are downloaded by setup.sh
+data/
+models/
+
+# your own runs (reference results live in reference/)
+results/
+
+# build products
+docs/*.aux docs/*.log docs/*.out
+
+# logs and scratch
+*.log
+*_scratch.py

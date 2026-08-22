@@ -1,0 +1,10 @@
+{
+ "variant": "direct",
+ "trainable_params": 161286,
+ "best_val_macro_f1": 0.977,
+ "best_epoch": 17,
+ "epochs": 30,
+ "seed": 0,
+ "lr": 0.001,
+ "tau": 1.0
+}

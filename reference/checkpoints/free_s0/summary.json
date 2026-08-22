@@ -1,0 +1,10 @@
+{
+ "variant": "free",
+ "trainable_params": 412230,
+ "best_val_macro_f1": 0.9615,
+ "best_epoch": 2,
+ "epochs": 30,
+ "seed": 0,
+ "lr": 0.001,
+ "tau": 1.0
+}

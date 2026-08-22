@@ -1,0 +1,93 @@
+<!doctype html><meta charset='utf-8'><style>
+@page { size: letter; margin: 0.55in 0.65in; }
+body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 9.4pt; line-height: 1.27; color: #111; }
+h1 { font-size: 15pt; margin: 0 0 4pt 0; }
+h2 { font-size: 11pt; margin: 9pt 0 3pt 0; border-bottom: 1px solid #999; padding-bottom: 1pt; }
+p { margin: 0 0 5pt 0; text-align: justify; }
+ul { margin: 0 0 5pt 0; padding-left: 14pt; }
+li { margin-bottom: 2pt; }
+table { border-collapse: collapse; margin: 3pt 0 6pt 0; font-size: 9pt; }
+th, td { border-bottom: 1px solid #bbb; padding: 1.5pt 8pt; text-align: left; }
+th { border-bottom: 1.5px solid #444; }
+td:not(:first-child), th:not(:first-child) { text-align: right; }
+code { font-family: Menlo, Consolas, monospace; font-size: 8.6pt; }
+a { color: #1a4d8f; text-decoration: none; }
+</style><body><h1>Technical note — Sensor Context Encoder Challenge</h1>
+<p>Chris Shi · 2026-08-21 · code and reference results: <a href="https://github.com/czhs/HCL-ML">https://github.com/czhs/HCL-ML</a> · writeup: <a href="https://czhs.github.io/HCL-ML/">https://czhs.github.io/HCL-ML/</a></p>
+<p><strong>Summary.</strong> I built the required pair — a direct sensor classifier and a context-embedding model sharing its encoder — plus one design choice that makes the interface interpretable by construction: the context embedding is constrained to a <em>simplex</em> whose corners are six real token embeddings. On the held-out subjects both models reach macro-F1 0.94, the shuffled-embedding check collapses to chance, and the trainable parameter count is 1.7 % of the budget. The interface works; what the language model contributes, the ablations show, is a well-conditioned channel rather than understanding.</p>
+<h2>Sensor encoder and projector design</h2>
+<p><strong>Encoder</strong> (identical in every condition, so the comparison isolates the interface rather than the feature extractor): a 1-D CNN over the raw 128×9 window — Conv1d 9→64 (k5, stride 2), 64→128 (k5, stride 2), 128→128 (k3), each BatchNorm + GELU, then global mean- and max-pooling over time concatenated into a 256-d feature and a Linear + GELU projection; 160,742 parameters. Convolution suits the signal because the label is invariant to <em>where</em> in the window a step lands; mean-pooling carries the gravity/posture statistics that separate the static classes, max-pooling the transient impacts that separate the gait classes. Inputs are z-scored per channel with training-split statistics.</p>
+<p><strong>Projector.</strong> A single Linear 256→6 followed by a softmax gives barycentric weights <em>w</em> on the 5-simplex; the context embedding is <em>e</em> = <em>w</em>·A, where A holds six frozen rows of the LM's own embedding table. The corners come from a search over the 21,185 single word-like tokens in SmolLM2's vocabulary: grow a synonym island around each activity in centred embedding space, then pick one token per island minimising the worst pairwise cosine while keeping each a recognisable synonym. The result — <em>walking · climb · descending · seated · upright · lying</em> — has a maximum pairwise cosine of 0.24, against 0.82 for the original label phrases (which share the token <code>walking</code>). <em>e</em> is a convex combination of genuine token embeddings, so it lies on the LM's input manifold by construction, and the encoder's entire interface to the LM is six numbers.</p>
+<p><strong>Language-model path.</strong> <em>e</em> replaces <code>&lt;SENSOR&gt;</code> in the mandated prompt's input-embedding sequence (position 28 of 32); sensor values are never rendered as text. The LM is SmolLM2-360M-Instruct in bf16, fully frozen including its embedding table; gradients flow through it into the projector and encoder. A trainable Linear 960→6 head reads the final hidden state after <code>Activity:</code>. The direct classifier is the identical trunk with a Linear 256→6 head.</p>
+<h2>Training setup and trainable parameter count</h2>
+<p>AdamW, learning rate 1e-3 with cosine decay, weight decay 1e-4, batch 128, 30 epochs, cross-entropy loss. The official subject-wise test split was never touched during development; model selection used a subject-wise validation split — subjects 17, 25, 26 and 30, carved from the 21 training subjects with seed 42 — giving 5,800 / 1,552 / 2,947 windows for train / val / test. For each training seed the best-validation checkpoint is evaluated exactly once on test. A seed-0 run of all conditions takes ≈ 5 min on one RTX 4090.</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th style="text-align: right;">Trainable parameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct classifier (trunk + head)</td>
+<td style="text-align: right;">161,286</td>
+</tr>
+<tr>
+<td>Context model (trunk + simplex projector + LM head)</td>
+<td style="text-align: right;"><strong>167,052</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Both ≈ 1.7 % of the 10 M budget; the LM's 361.8 M parameters are frozen. (The supplementary unconstrained-projector ablation used 412,230.)</p>
+<h2>Results and interpretation</h2>
+<p>Macro-F1 on the test split, single run (training seed 0, shuffle seed 123) and mean ± std over 8 training seeds (0–7; shuffle seed 123 + s). The shuffled condition permutes <em>complete</em> projected embeddings between test examples with no retraining.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th style="text-align: right;">seed 0</th>
+<th style="text-align: right;">8 seeds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct sensor classifier</td>
+<td style="text-align: right;"><strong>0.9618</strong></td>
+<td style="text-align: right;"><strong>0.9402 ± 0.0154</strong></td>
+</tr>
+<tr>
+<td>Context-embedding model (simplex)</td>
+<td style="text-align: right;"><strong>0.9555</strong></td>
+<td style="text-align: right;"><strong>0.8937 ± 0.1325</strong> — 7/8 converged seeds: 0.9403 ± 0.0159</td>
+</tr>
+<tr>
+<td>Context model with shuffled embeddings</td>
+<td style="text-align: right;"><strong>0.1763</strong></td>
+<td style="text-align: right;"><strong>0.1652 ± 0.0083</strong></td>
+</tr>
+<tr>
+<td><em>supplementary:</em> unconstrained 960-d projector</td>
+<td style="text-align: right;">0.9149</td>
+<td style="text-align: right;">0.9138 ± 0.0121</td>
+</tr>
+<tr>
+<td><em>supplementary:</em> same 6-d code without the LM</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">0.6313 ± 0.1146</td>
+</tr>
+</tbody>
+</table>
+<p>The frozen-LM interface is free: on its converged seeds the context model and the direct classifier are statistically indistinguishable on unseen subjects. One simplex seed in eight settled in a bad basin (val 0.59, test 0.57) — loud on validation, so a val gate catches it, but a real ~1-in-8 instability at these hyperparameters. The shuffled control falls to chance (1/6 ≈ 0.167): the prediction depends on the matching sensor embedding, not on prompt priors. Errors land where the sensor physics predicts — sitting vs standing dominates the confusion for both models (a waist-mounted phone sees nearly the same gravity vector in both postures) — not where the label tokens are most similar, so the context path is not bottlenecked by label semantics.</p>
+<p>Ablations (validation macro-F1, 3 seeds unless noted) locate what the LM contributes. An unconstrained 960-d projector at the same output radius scores lower on test (0.914) and trains unstably, so the on-manifold constraint does real work. Removing the LM but keeping the six-number bottleneck collapses to 0.66 ± 0.12 (8 seeds): <em>w</em> saturates to one-hot and gradients through the softmax die — the frozen LM keeps the code soft and trainable. A randomly initialised frozen transformer of the same shape (pretrained embedding table kept) drops to 0.617 ± 0.025: pretraining is worth ≈ 35 points. Yet deleting the prompt (0.978 / 0.967 on converged seeds) or swapping it for an unrelated recipe (0.961 ± 0.014) changes nothing, and six maximally separated <em>meaning-free</em> anchors (<em>the · antioxid · agitated · salaries · whe · toggle</em>) tie the synonym anchors (0.970 ± 0.004 vs 0.967 ± 0.010). The pretrained network matters as a well-conditioned, information-preserving channel — not as a reader of the prompt or of the anchor words.</p>
+<h2>Known limitations</h2>
+<ul>
+<li><strong>The anchors are not semantically used.</strong> Meaning-free anchors tie, and the encoder's frame is a derangement (walking windows sit by the <em>descending</em> corner). Separation matters; meaning does not.</li>
+<li><strong>The code is a coordinate, not a classification.</strong> argmax(<em>w</em>) matches the label only ~31 % of the time; the LM and head decode the hull's interior jointly, so <em>w</em> must not be read as class probabilities.</li>
+<li><strong>Capacity saturates early.</strong> ~4 of the 5 degrees of freedom are used; a sweep over the number of corners plateaus from K ≈ 4 to 64, and a single anchor with a sigmoid strength gate already reaches 0.936 — one scalar through the LM.</li>
+<li><strong>The transformer functions as a wire.</strong> A layer-wise probe finds the activity fully decodable at the readout position right after layer 1 (0.97) and flat for 31 more layers — transported, not computed — and the logit lens shows the vocabulary space ignoring the sensor until the last few layers. The wire is nonetheless load-bearing (no-LM bottleneck 0.66).</li>
+<li><strong>Stability and invariance.</strong> ~1-in-8 seed collapse (untested stabilisers: temperature, entropy bonus, projector warm-up); the code also carries <em>who</em> is moving — a probe on <em>w</em> identifies the unseen validation subject at up to 2× chance — a style channel behind part of the val→test gap and a soft biometric if embeddings leave the device.</li>
+<li>One dataset and sensor placement; validation is 4 subjects, so val−test gaps of 2–4 points are expected cross-subject noise; the LM path costs a 360 M forward per window against a 161 k CNN.</li>
+</ul>
+<h2>Recommendation</h2>
+<p><strong>Develop the context-embedding approach further — mechanistically, not by chasing accuracy.</strong> The premise holds: a sensor can write into a frozen language model as one continuous vector and be read out at parity with a direct classifier, with a clean sensor-dependence check and a projector whose six corners are auditable tokens. The simplex parameterisation is the interface pattern I would reuse for further modalities: on-manifold by construction, stable where the unconstrained projector is not, six interpretable numbers wide. But every ablation says the model is used as a structured non-linear function, not as something that understands the signal, so the next step is not a better encoder but a direct test of understanding — train the model to <em>describe</em> its input (self-explanation in the style of Li et al., arXiv:2511.08579), instrumented with the layer-wise probes that proved decisive here. For activity recognition alone, the direct classifier remains the better engineering choice: equal accuracy at a fraction of the inference cost.</p></body>

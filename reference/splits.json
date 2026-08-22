@@ -1,0 +1,639 @@
+{
+ "seed": 42,
+ "signals": [
+  "total_acc_x",
+  "total_acc_y",
+  "total_acc_z",
+  "body_acc_x",
+  "body_acc_y",
+  "body_acc_z",
+  "body_gyro_x",
+  "body_gyro_y",
+  "body_gyro_z"
+ ],
+ "activities": {
+  "1": "WALKING",
+  "2": "WALKING_UPSTAIRS",
+  "3": "WALKING_DOWNSTAIRS",
+  "4": "SITTING",
+  "5": "STANDING",
+  "6": "LAYING"
+ },
+ "window": {
+  "length": 128,
+  "rate_hz": 50.0,
+  "seconds": 2.56,
+  "overlap": 0.5
+ },
+ "subjects": {
+  "train": [
+   1,
+   3,
+   5,
+   6,
+   7,
+   8,
+   11,
+   14,
+   15,
+   16,
+   19,
+   21,
+   22,
+   23,
+   27,
+   28,
+   29
+  ],
+  "val": [
+   17,
+   25,
+   26,
+   30
+  ],
+  "test": [
+   2,
+   4,
+   9,
+   10,
+   12,
+   13,
+   18,
+   20,
+   24
+  ]
+ },
+ "splits": {
+  "train": {
+   "n_windows": 5800,
+   "n_subjects": 17,
+   "class_counts": {
+    "WALKING": 967,
+    "WALKING_UPSTAIRS": 840,
+    "WALKING_DOWNSTAIRS": 770,
+    "SITTING": 1017,
+    "STANDING": 1089,
+    "LAYING": 1117
+   },
+   "channel_stats": {
+    "total_acc_x": {
+     "mean": 0.8035777631313608,
+     "std": 0.413726451557861,
+     "min": -0.46655580401420593,
+     "max": 2.197618007659912
+    },
+    "total_acc_y": {
+     "mean": 0.018523907571618387,
+     "std": 0.3931004311927424,
+     "min": -1.5820790529251099,
+     "max": 1.2173500061035156
+    },
+    "total_acc_z": {
+     "mean": 0.06811781463034032,
+     "std": 0.36732055196123076,
+     "min": -1.6396089792251587,
+     "max": 1.2813630104064941
+    },
+    "body_acc_x": {
+     "mean": -0.0006466454526033284,
+     "std": 0.19961220706530025,
+     "min": -1.2322380542755127,
+     "max": 1.2999119758605957
+    },
+    "body_acc_y": {
+     "mean": -0.0002951720333870645,
+     "std": 0.12462670791418842,
+     "min": -1.3452670574188232,
+     "max": 0.9759764075279236
+    },
+    "body_acc_z": {
+     "mean": -0.0003670974277807282,
+     "std": 0.10893668708553002,
+     "min": -1.3647069931030273,
+     "max": 1.0669159889221191
+    },
+    "body_gyro_x": {
+     "mean": -0.00196630245302201,
+     "std": 0.40898990387451595,
+     "min": -4.73365592956543,
+     "max": 4.155473232269287
+    },
+    "body_gyro_y": {
+     "mean": -0.00032086074051855605,
+     "std": 0.3946455599116328,
+     "min": -5.974329948425293,
+     "max": 5.7460618019104
+    },
+    "body_gyro_z": {
+     "mean": -8.103226756066501e-05,
+     "std": 0.2642437045072422,
+     "min": -2.763014078140259,
+     "max": 2.3659820556640625
+    }
+   }
+  },
+  "val": {
+   "n_windows": 1552,
+   "n_subjects": 4,
+   "class_counts": {
+    "WALKING": 259,
+    "WALKING_UPSTAIRS": 233,
+    "WALKING_DOWNSTAIRS": 216,
+    "SITTING": 269,
+    "STANDING": 285,
+    "LAYING": 290
+   },
+   "channel_stats": {
+    "total_acc_x": {
+     "mean": 0.8091273685761624,
+     "std": 0.4155201815408067,
+     "min": -0.44541049003601074,
+     "max": 2.0928070545196533
+    },
+    "total_acc_y": {
+     "mean": 0.06699205711474691,
+     "std": 0.380599481316796,
+     "min": -1.1398329734802246,
+     "max": 1.0699379444122314
+    },
+    "total_acc_z": {
+     "mean": 0.15518691414120517,
+     "std": 0.3100565807674408,
+     "min": -0.9703567028045654,
+     "max": 1.011152982711792
+    },
+    "body_acc_x": {
+     "mean": -0.0005976523397995457,
+     "std": 0.17589643497267127,
+     "min": -0.7817417979240417,
+     "max": 1.112504005432129
+    },
+    "body_acc_y": {
+     "mean": -0.00028155202221505447,
+     "std": 0.11383325116577814,
+     "min": -1.061527967453003,
+     "max": 0.7664585113525391
+    },
+    "body_acc_z": {
+     "mean": 6.776018238338793e-05,
+     "std": 0.09880887290834994,
+     "min": -0.7748550772666931,
+     "max": 0.7387139201164246
+    },
+    "body_gyro_x": {
+     "mean": 0.009747475755837311,
+     "std": 0.39844660484247946,
+     "min": -3.0789570808410645,
+     "max": 2.5998189449310303
+    },
+    "body_gyro_y": {
+     "mean": -0.0027032503437701173,
+     "std": 0.3296812824410481,
+     "min": -2.1005289554595947,
+     "max": 2.331753969192505
+    },
+    "body_gyro_z": {
+     "mean": 0.0008378763704806048,
+     "std": 0.22109989845744238,
+     "min": -1.7525789737701416,
+     "max": 1.450971007347107
+    }
+   }
+  },
+  "test": {
+   "n_windows": 2947,
+   "n_subjects": 9,
+   "class_counts": {
+    "WALKING": 496,
+    "WALKING_UPSTAIRS": 471,
+    "WALKING_DOWNSTAIRS": 420,
+    "SITTING": 491,
+    "STANDING": 532,
+    "LAYING": 537
+   },
+   "channel_stats": {
+    "total_acc_x": {
+     "mean": 0.817263302945947,
+     "std": 0.40651260336738926,
+     "min": -0.2777351140975952,
+     "max": 2.1126821041107178
+    },
+    "total_acc_y": {
+     "mean": 0.004349350921069338,
+     "std": 0.41204051668764985,
+     "min": -1.5882110595703125,
+     "max": 1.1343129873275757
+    },
+    "total_acc_z": {
+     "mean": 0.08067054811540901,
+     "std": 0.30792520163967524,
+     "min": -1.3475010395050049,
+     "max": 1.043383002281189
+    },
+    "body_acc_x": {
+     "mean": -0.0007377533461178277,
+     "std": 0.18430971543387895,
+     "min": -0.9054064154624939,
+     "max": 1.1576149463653564
+    },
+    "body_acc_y": {
+     "mean": -0.000380400767968383,
+     "std": 0.12060284898395693,
+     "min": -1.2510249614715576,
+     "max": 0.7756596207618713
+    },
+    "body_acc_z": {
+     "mean": -2.5951829472524374e-05,
+     "std": 0.09553509613072952,
+     "min": -1.1068320274353027,
+     "max": 0.7100780010223389
+    },
+    "body_gyro_x": {
+     "mean": -0.013185089643649013,
+     "std": 0.39651639822921975,
+     "min": -3.4317009449005127,
+     "max": 3.2930901050567627
+    },
+    "body_gyro_y": {
+     "mean": 0.001455400870435898,
+     "std": 0.34044524240752505,
+     "min": -3.155205011367798,
+     "max": 3.468111038208008
+    },
+    "body_gyro_z": {
+     "mean": 0.002849609005629851,
+     "std": 0.2494160161542331,
+     "min": -2.623059034347534,
+     "max": 1.8463799953460693
+    }
+   }
+  }
+ },
+ "per_subject": {
+  "1": {
+   "split": "train",
+   "n_windows": 347,
+   "class_counts": {
+    "WALKING": 95,
+    "WALKING_UPSTAIRS": 53,
+    "WALKING_DOWNSTAIRS": 49,
+    "SITTING": 47,
+    "STANDING": 53,
+    "LAYING": 50
+   }
+  },
+  "3": {
+   "split": "train",
+   "n_windows": 341,
+   "class_counts": {
+    "WALKING": 58,
+    "WALKING_UPSTAIRS": 59,
+    "WALKING_DOWNSTAIRS": 49,
+    "SITTING": 52,
+    "STANDING": 61,
+    "LAYING": 62
+   }
+  },
+  "5": {
+   "split": "train",
+   "n_windows": 302,
+   "class_counts": {
+    "WALKING": 56,
+    "WALKING_UPSTAIRS": 47,
+    "WALKING_DOWNSTAIRS": 47,
+    "SITTING": 44,
+    "STANDING": 56,
+    "LAYING": 52
+   }
+  },
+  "6": {
+   "split": "train",
+   "n_windows": 325,
+   "class_counts": {
+    "WALKING": 57,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 48,
+    "SITTING": 55,
+    "STANDING": 57,
+    "LAYING": 57
+   }
+  },
+  "7": {
+   "split": "train",
+   "n_windows": 308,
+   "class_counts": {
+    "WALKING": 57,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 47,
+    "SITTING": 48,
+    "STANDING": 53,
+    "LAYING": 52
+   }
+  },
+  "8": {
+   "split": "train",
+   "n_windows": 281,
+   "class_counts": {
+    "WALKING": 48,
+    "WALKING_UPSTAIRS": 41,
+    "WALKING_DOWNSTAIRS": 38,
+    "SITTING": 46,
+    "STANDING": 54,
+    "LAYING": 54
+   }
+  },
+  "11": {
+   "split": "train",
+   "n_windows": 316,
+   "class_counts": {
+    "WALKING": 59,
+    "WALKING_UPSTAIRS": 54,
+    "WALKING_DOWNSTAIRS": 46,
+    "SITTING": 53,
+    "STANDING": 47,
+    "LAYING": 57
+   }
+  },
+  "14": {
+   "split": "train",
+   "n_windows": 323,
+   "class_counts": {
+    "WALKING": 59,
+    "WALKING_UPSTAIRS": 54,
+    "WALKING_DOWNSTAIRS": 45,
+    "SITTING": 54,
+    "STANDING": 60,
+    "LAYING": 51
+   }
+  },
+  "15": {
+   "split": "train",
+   "n_windows": 328,
+   "class_counts": {
+    "WALKING": 54,
+    "WALKING_UPSTAIRS": 48,
+    "WALKING_DOWNSTAIRS": 42,
+    "SITTING": 59,
+    "STANDING": 53,
+    "LAYING": 72
+   }
+  },
+  "16": {
+   "split": "train",
+   "n_windows": 366,
+   "class_counts": {
+    "WALKING": 51,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 47,
+    "SITTING": 69,
+    "STANDING": 78,
+    "LAYING": 70
+   }
+  },
+  "19": {
+   "split": "train",
+   "n_windows": 360,
+   "class_counts": {
+    "WALKING": 52,
+    "WALKING_UPSTAIRS": 40,
+    "WALKING_DOWNSTAIRS": 39,
+    "SITTING": 73,
+    "STANDING": 73,
+    "LAYING": 83
+   }
+  },
+  "21": {
+   "split": "train",
+   "n_windows": 408,
+   "class_counts": {
+    "WALKING": 52,
+    "WALKING_UPSTAIRS": 47,
+    "WALKING_DOWNSTAIRS": 45,
+    "SITTING": 85,
+    "STANDING": 89,
+    "LAYING": 90
+   }
+  },
+  "22": {
+   "split": "train",
+   "n_windows": 321,
+   "class_counts": {
+    "WALKING": 46,
+    "WALKING_UPSTAIRS": 42,
+    "WALKING_DOWNSTAIRS": 36,
+    "SITTING": 62,
+    "STANDING": 63,
+    "LAYING": 72
+   }
+  },
+  "23": {
+   "split": "train",
+   "n_windows": 372,
+   "class_counts": {
+    "WALKING": 59,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 54,
+    "SITTING": 68,
+    "STANDING": 68,
+    "LAYING": 72
+   }
+  },
+  "27": {
+   "split": "train",
+   "n_windows": 376,
+   "class_counts": {
+    "WALKING": 57,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 44,
+    "SITTING": 70,
+    "STANDING": 80,
+    "LAYING": 74
+   }
+  },
+  "28": {
+   "split": "train",
+   "n_windows": 382,
+   "class_counts": {
+    "WALKING": 54,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 46,
+    "SITTING": 72,
+    "STANDING": 79,
+    "LAYING": 80
+   }
+  },
+  "29": {
+   "split": "train",
+   "n_windows": 344,
+   "class_counts": {
+    "WALKING": 53,
+    "WALKING_UPSTAIRS": 49,
+    "WALKING_DOWNSTAIRS": 48,
+    "SITTING": 60,
+    "STANDING": 65,
+    "LAYING": 69
+   }
+  },
+  "17": {
+   "split": "val",
+   "n_windows": 368,
+   "class_counts": {
+    "WALKING": 61,
+    "WALKING_UPSTAIRS": 48,
+    "WALKING_DOWNSTAIRS": 46,
+    "SITTING": 64,
+    "STANDING": 78,
+    "LAYING": 71
+   }
+  },
+  "25": {
+   "split": "val",
+   "n_windows": 409,
+   "class_counts": {
+    "WALKING": 74,
+    "WALKING_UPSTAIRS": 65,
+    "WALKING_DOWNSTAIRS": 58,
+    "SITTING": 65,
+    "STANDING": 74,
+    "LAYING": 73
+   }
+  },
+  "26": {
+   "split": "val",
+   "n_windows": 392,
+   "class_counts": {
+    "WALKING": 59,
+    "WALKING_UPSTAIRS": 55,
+    "WALKING_DOWNSTAIRS": 50,
+    "SITTING": 78,
+    "STANDING": 74,
+    "LAYING": 76
+   }
+  },
+  "30": {
+   "split": "val",
+   "n_windows": 383,
+   "class_counts": {
+    "WALKING": 65,
+    "WALKING_UPSTAIRS": 65,
+    "WALKING_DOWNSTAIRS": 62,
+    "SITTING": 62,
+    "STANDING": 59,
+    "LAYING": 70
+   }
+  },
+  "2": {
+   "split": "test",
+   "n_windows": 302,
+   "class_counts": {
+    "WALKING": 59,
+    "WALKING_UPSTAIRS": 48,
+    "WALKING_DOWNSTAIRS": 47,
+    "SITTING": 46,
+    "STANDING": 54,
+    "LAYING": 48
+   }
+  },
+  "4": {
+   "split": "test",
+   "n_windows": 317,
+   "class_counts": {
+    "WALKING": 60,
+    "WALKING_UPSTAIRS": 52,
+    "WALKING_DOWNSTAIRS": 45,
+    "SITTING": 50,
+    "STANDING": 56,
+    "LAYING": 54
+   }
+  },
+  "9": {
+   "split": "test",
+   "n_windows": 288,
+   "class_counts": {
+    "WALKING": 52,
+    "WALKING_UPSTAIRS": 49,
+    "WALKING_DOWNSTAIRS": 42,
+    "SITTING": 50,
+    "STANDING": 45,
+    "LAYING": 50
+   }
+  },
+  "10": {
+   "split": "test",
+   "n_windows": 294,
+   "class_counts": {
+    "WALKING": 53,
+    "WALKING_UPSTAIRS": 47,
+    "WALKING_DOWNSTAIRS": 38,
+    "SITTING": 54,
+    "STANDING": 44,
+    "LAYING": 58
+   }
+  },
+  "12": {
+   "split": "test",
+   "n_windows": 320,
+   "class_counts": {
+    "WALKING": 50,
+    "WALKING_UPSTAIRS": 52,
+    "WALKING_DOWNSTAIRS": 46,
+    "SITTING": 51,
+    "STANDING": 61,
+    "LAYING": 60
+   }
+  },
+  "13": {
+   "split": "test",
+   "n_windows": 327,
+   "class_counts": {
+    "WALKING": 57,
+    "WALKING_UPSTAIRS": 55,
+    "WALKING_DOWNSTAIRS": 47,
+    "SITTING": 49,
+    "STANDING": 57,
+    "LAYING": 62
+   }
+  },
+  "18": {
+   "split": "test",
+   "n_windows": 364,
+   "class_counts": {
+    "WALKING": 56,
+    "WALKING_UPSTAIRS": 58,
+    "WALKING_DOWNSTAIRS": 55,
+    "SITTING": 57,
+    "STANDING": 73,
+    "LAYING": 65
+   }
+  },
+  "20": {
+   "split": "test",
+   "n_windows": 354,
+   "class_counts": {
+    "WALKING": 51,
+    "WALKING_UPSTAIRS": 51,
+    "WALKING_DOWNSTAIRS": 45,
+    "SITTING": 66,
+    "STANDING": 73,
+    "LAYING": 68
+   }
+  },
+  "24": {
+   "split": "test",
+   "n_windows": 381,
+   "class_counts": {
+    "WALKING": 58,
+    "WALKING_UPSTAIRS": 59,
+    "WALKING_DOWNSTAIRS": 55,
+    "SITTING": 68,
+    "STANDING": 69,
+    "LAYING": 72
+   }
+  }
+ },
+ "fractions": {
+  "train": 0.5632,
+  "val": 0.1507,
+  "test": 0.2861
+ }
+}

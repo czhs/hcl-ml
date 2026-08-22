@@ -1,0 +1,2 @@
+# optional: hcl.umap_simplex (code-map figure)
+umap-learn==0.5.12

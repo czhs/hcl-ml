@@ -1,0 +1,10 @@
+{
+ "variant": "bottleneck",
+ "trainable_params": 161328,
+ "best_val_macro_f1": 0.5582,
+ "best_epoch": 6,
+ "epochs": 30,
+ "seed": 0,
+ "lr": 0.001,
+ "tau": 1.0
+}

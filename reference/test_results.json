@@ -1,0 +1,263 @@
+{
+ "classes": [
+  "WALKING",
+  "WALKING_UPSTAIRS",
+  "WALKING_DOWNSTAIRS",
+  "SITTING",
+  "STANDING",
+  "LAYING"
+ ],
+ "shuffle_seed": 123,
+ "conditions": {
+  "direct": {
+   "macro_f1": 0.9618,
+   "per_class_f1": {
+    "WALKING": 0.994,
+    "WALKING_UPSTAIRS": 0.9688,
+    "WALKING_DOWNSTAIRS": 0.9754,
+    "SITTING": 0.9116,
+    "STANDING": 0.942,
+    "LAYING": 0.979
+   },
+   "confusion": [
+    [
+     496,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     1,
+     450,
+     18,
+     2,
+     0,
+     0
+    ],
+    [
+     3,
+     0,
+     417,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     2,
+     0,
+     423,
+     43,
+     23
+    ],
+    [
+     2,
+     6,
+     0,
+     12,
+     512,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     537
+    ]
+   ],
+   "val_macro_f1": 0.977,
+   "trainable_params": 161286
+  },
+  "simplex": {
+   "macro_f1": 0.9555,
+   "per_class_f1": {
+    "WALKING": 0.9715,
+    "WALKING_UPSTAIRS": 0.9629,
+    "WALKING_DOWNSTAIRS": 0.9733,
+    "SITTING": 0.8994,
+    "STANDING": 0.9326,
+    "LAYING": 0.9935
+   },
+   "confusion": [
+    [
+     478,
+     2,
+     15,
+     0,
+     1,
+     0
+    ],
+    [
+     7,
+     441,
+     7,
+     16,
+     0,
+     0
+    ],
+    [
+     1,
+     0,
+     419,
+     0,
+     0,
+     0
+    ],
+    [
+     0,
+     2,
+     0,
+     429,
+     53,
+     7
+    ],
+    [
+     2,
+     0,
+     0,
+     18,
+     512,
+     0
+    ],
+    [
+     0,
+     0,
+     0,
+     0,
+     0,
+     537
+    ]
+   ],
+   "val_macro_f1": 0.9741,
+   "trainable_params": 167052
+  },
+  "shuffled": {
+   "macro_f1": 0.1763,
+   "per_class_f1": {
+    "WALKING": 0.1789,
+    "WALKING_UPSTAIRS": 0.1572,
+    "WALKING_DOWNSTAIRS": 0.1696,
+    "SITTING": 0.1574,
+    "STANDING": 0.1911,
+    "LAYING": 0.2035
+   },
+   "confusion": [
+    [
+     88,
+     66,
+     72,
+     78,
+     99,
+     93
+    ],
+    [
+     82,
+     72,
+     75,
+     63,
+     85,
+     94
+    ],
+    [
+     54,
+     57,
+     73,
+     72,
+     83,
+     81
+    ],
+    [
+     90,
+     81,
+     67,
+     75,
+     95,
+     83
+    ],
+    [
+     91,
+     85,
+     82,
+     86,
+     105,
+     83
+    ],
+    [
+     83,
+     84,
+     72,
+     88,
+     100,
+     110
+    ]
+   ]
+  },
+  "free": {
+   "macro_f1": 0.9149,
+   "per_class_f1": {
+    "WALKING": 0.9821,
+    "WALKING_UPSTAIRS": 0.9565,
+    "WALKING_DOWNSTAIRS": 0.9569,
+    "SITTING": 0.7821,
+    "STANDING": 0.8145,
+    "LAYING": 0.9972
+   },
+   "confusion": [
+    [
+     495,
+     1,
+     0,
+     0,
+     0,
+     0
+    ],
+    [
+     5,
+     451,
+     15,
+     0,
+     0,
+     0
+    ],
+    [
+     5,
+     15,
+     400,
+     0,
+     0,
+     0
+    ],
+    [
+     5,
+     4,
+     1,
+     375,
+     104,
+     2
+    ],
+    [
+     2,
+     0,
+     0,
+     93,
+     437,
+     0
+    ],
+    [
+     0,
+     1,
+     0,
+     0,
+     0,
+     536
+    ]
+   ],
+   "val_macro_f1": 0.9615,
+   "trainable_params": 412230
+  }
+ }
+}

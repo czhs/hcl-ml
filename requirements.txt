@@ -1,0 +1,12 @@
+# Tested environment (RTX 4090, driver 535, Python 3.10.12). setup.sh installs
+# torch separately so you can pick the CUDA build for your driver.
+torch>=2.5
+transformers==5.15.1
+tokenizers==0.22.2
+safetensors==0.8.0
+huggingface_hub==1.28.0
+numpy==2.2.6
+pandas==2.3.3
+scipy==1.15.3
+scikit-learn==1.7.2
+matplotlib==3.10.9

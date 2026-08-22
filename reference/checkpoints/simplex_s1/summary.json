@@ -1,0 +1,10 @@
+{
+ "variant": "simplex",
+ "trainable_params": 167052,
+ "best_val_macro_f1": 0.9806,
+ "best_epoch": 18,
+ "epochs": 30,
+ "seed": 1,
+ "lr": 0.001,
+ "tau": 1.0
+}
