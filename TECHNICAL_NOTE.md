@@ -33,7 +33,7 @@ Macro-F1 on the test split, single run (training seed 0, shuffle seed 123) and m
 | Context-embedding model (simplex) | **0.9555** | **0.8937 ± 0.1325** — 7/8 converged seeds: 0.9403 ± 0.0159 |
 | Context model with shuffled embeddings | **0.1763** | **0.1652 ± 0.0083** |
 | *supplementary:* unconstrained 960-d projector | 0.9149 | 0.9138 ± 0.0121 |
-| *supplementary:* same 6-d code without the LM | — | 0.6313 ± 0.1146 |
+| *supplementary:* same 6-d code without the LM | 0.5375 | 0.6313 ± 0.1146 |
 
 The frozen-LM interface is free: on its converged seeds the context model and the direct classifier are statistically indistinguishable on unseen subjects. One simplex seed in eight settled in a bad basin (val 0.59, test 0.57) — loud on validation, so a val gate catches it, but a real ~1-in-8 instability at these hyperparameters. The shuffled control falls to chance (1/6 ≈ 0.167): the prediction depends on the matching sensor embedding, not on prompt priors. Errors land where the sensor physics predicts — sitting vs standing dominates the confusion for both models (a waist-mounted phone sees nearly the same gravity vector in both postures) — not where the label tokens are most similar, so the context path is not bottlenecked by label semantics.
 

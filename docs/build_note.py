@@ -19,6 +19,7 @@ body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 9
 h1 { font-size: 15pt; margin: 0 0 4pt 0; }
 h2 { font-size: 11pt; margin: 9pt 0 3pt 0; border-bottom: 1px solid #999; padding-bottom: 1pt; }
 p { margin: 0 0 5pt 0; text-align: justify; }
+h1 + p { text-align: left; color: #444; }
 ul { margin: 0 0 5pt 0; padding-left: 14pt; }
 li { margin-bottom: 2pt; }
 table { border-collapse: collapse; margin: 3pt 0 6pt 0; font-size: 9pt; }
